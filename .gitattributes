@@ -1,9 +1,5 @@
-* -text
-*.cs        text eol=lf diff=csharp
-*.shader    text eol=lf
-*.cginc     text eol=lf
-*.hlsl      text eol=lf
-*.compute   text eol=lf
-*.meta      text eol=lf
-*.dylib filter=lfs diff=lfs merge=lfs -text
 *.dll filter=lfs diff=lfs merge=lfs -text
+git filter=lfs diff=lfs merge=lfs -text
+lfs filter=lfs diff=lfs merge=lfs -text
+track filter=lfs diff=lfs merge=lfs -text
+*.dylib filter=lfs diff=lfs merge=lfs -text

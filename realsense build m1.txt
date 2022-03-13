@@ -1,0 +1,38 @@
+ 
+For regular install & pyrealsense2:
+sudo xcode-select --reset
+
+export LIBRARY_PATH=/usr/local/lib/
+
+cmake ..  -DBUILD_EXAMPLES=true -DBUILD_WITH_OPENMP=false -DHWM_OVER_XU=false -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DBUILD_PYTHON_BINDINGS=true -DPYTHON_EXECUTABLE=/opt/homebrew/cellar/python@3.9/3.9.10/bin/python3 -DBUILD_NETWORK_DEVICE=true
+
+
+ make -j2  
+
+install_name_tool -change /usr/local/opt/libusb/lib/libusb-1.0.0.dylib @rpath/libusb-1.0.0.dylib librealsense2.dylib
+
+make install
+
+FOR CSharp BINDINGS:
+
+cp wrappers/csharp/ to buildNew/wrappers/csharp 
+
+create file wrappers/csharp\Intel.RealSense\Intel.RealSense.csproj with following content:
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AssemblyName>Intel.RealSense</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OutputType>Library</OutputType>
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="**/*.cs" />
+    <Reference Include="System" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
+
+cd buildNew/wrappers/csharp/Intel.RealSense
+msbuild /nologo /verbosity:minimal
+
+
